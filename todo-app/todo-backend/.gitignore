@@ -60,5 +60,6 @@ typings/
 # next.js build output
 .next
 
-# volume directory for mongodb
+# volume directory for mongodb & redis
 mongo_data
+redis_data
