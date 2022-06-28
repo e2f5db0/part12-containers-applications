@@ -1,5 +1,6 @@
 const express = require('express');
-const { Todo } = require('../mongo')
+const { Todo } = require('../mongo');
+const { setAsync, getAsync } = require('../redis');
 const router = express.Router();
 
 /* GET todos listing. */
@@ -14,6 +15,13 @@ router.post('/', async (req, res) => {
     text: req.body.text,
     done: false
   })
+  const todoCount = await getAsync('added_todos')
+  if (!todoCount) {
+    setAsync('added_todos', 1)
+  } else {
+    const newCount = Number(todoCount) + 1
+    await setAsync('added_todos', newCount)
+  };
   res.send(todo);
 });
 
@@ -45,11 +53,10 @@ singleRouter.put('/', async (req, res) => {
     { _id: req.todo._id },
     { text, done },
     { new: true, useFindAndModify: false }
-  );
+  )
   res.status(200).send(newTodo)
 });
 
 router.use('/:id', findByIdMiddleware, singleRouter)
-
 
 module.exports = router;
