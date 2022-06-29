@@ -23,7 +23,7 @@ services:
       - ./redis_data:/data
     container_name: redis-dev
   server:
-    image: express-server
+    image: todo-backend-dev
     build:
       context: .
       dockerfile: dev.Dockerfile

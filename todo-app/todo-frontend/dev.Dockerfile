@@ -1,6 +1,6 @@
 FROM node:16
 
-WORKDIR /usr/src/app
+WORKDIR /usr/src/todo-frontend
 
 ENV REACT_APP_BACKEND_URL=http://localhost:3001
 
